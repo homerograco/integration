@@ -1,0 +1,33 @@
+<html>
+    <head>
+    	<title>Optile</title>
+    </head>
+    <body>
+
+    	<h2>Merchant Site</h2>
+        <button
+		    type="button" class="gpn-button"
+		    data-merchant-id="xxxlesnina"
+		    data-logo="https://ppt.txpmnts.com/images/merchants/1542969146_2586.png"
+		    data-amount="{{if .amount}}{{index .amount 0}}{{end}}"
+		    data-currency="{{if .currency}}{{index .currency 0}}{{end}}"
+		    data-description="{{if .description}}{{index .description 0}}{{end}}"
+			  data-company="Opt-XXXLutz"
+		    data-customer-firstname="{{if .firstname}}{{index .firstname 0}}{{end}}"
+        data-customer-lastname="{{if .lastname}}{{index .lastname 0}}{{end}}"
+			data-customer-email="{{if .email}}{{index .email 0}}{{end}}"
+			data-customer-phone="{{if .phone}}{{index .phone 0}}{{end}}"
+			data-customer-birthdate="{{if .birthdate}}{{index .birthdate 0}}{{end}}"
+			data-customer-addressline="{{if .addressline}}{{index .addressline 0}}{{end}}"
+			data-customer-zipcode="{{if .zipcode}}{{index .zipcode 0}}{{end}}"
+			data-customer-city="{{if .city}}{{index .city 0}}{{end}}"
+			data-customer-country="{{if .country}}{{index .country 0}}{{end}}"
+      data-order-id="{{if .orderid}}{{index .orderid 0}}{{end}}"
+			data-billing-address="true"
+			data-skip-customerinfo="true"
+			data-locale="{{if .locale}}{{index .locale 0}}{{end}}"
+		>Pay With GpnData</button>
+
+        <script src="https://ppt.txpmnts.com/checkout.js"></script>
+    </body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Summary</title>
+	<meta charset="utf-8">
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	<script src="../op-payment-widget/op-payment-widget-v3.js"></script>
+	<script src="../js/main.js"></script>
+	<script src="../js/summary.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" type="text/css" href="./css/styles.css">
+	<link rel="stylesheet" type="text/css" href="./op-payment-widget/op-payment-widget-v3.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="page-header">
+      <h1>Summary</h1>
+    </div>
+    <div class="row">
+      <div class="col-md-2">
+      </div>
+
+      <div class="col-md-8">
+        <div class="panel panel-default">
+          <div class="panel-heading"><h2 id="total">Total: </h2></div>
+          <div class="panel-body">
+            <p>Please review your payment data below before continuing.</p>
+          </div>
+          <ul class="list-group">
+            <li class="list-group-item">Name: </li>
+            <li class="list-group-item">Address: </li>
+            <li class="list-group-item">Payment: </li>
+          </ul>
+        </div>
+        <div class="btn-group btn-group-justified" role="group">
+          <div class="btn-group" role="group">
+            <button id="cancelBtn" type="button" class="btn btn-warning">Cancel</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button id="confirmBtn" type="button" class="btn btn-success">Confirm</button>
+          </div>
+        </div>
+				<div id="paymentNetworks"></div>
+				<div id="submitBtnContainer">
+				    <button id="submitBtn" type="button"></button>
+				</div>
+      </div>
+
+      <div class="col-md-2">
+      </div>
+    </div>
+
+  </div>
+</body>
+
+<html>

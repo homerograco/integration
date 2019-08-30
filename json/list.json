@@ -1,0 +1,67 @@
+{
+	"transactionId": "op_test",
+	"country": "DE",
+	"integration": "SELECTIVE_NATIVE",
+	"division": "Default",
+	"presetFirst": false,
+	"updateOnly": false,
+	"channel": "WEB_ORDER",
+	"customer": {
+		"number": "1165821",
+		"email": "john.doe@optile.net",
+		"registration": {
+			"id": null,
+			"password": null
+		},
+		"name": {
+			"firstName": "John",
+			"lastName": "Doe"
+		},
+		"identities": {
+			"nationalId": {
+				"date": "2018-09-10T16:06:30.298Z",
+				"identifier": "MR0123A12"
+			}
+		},
+		"addresses": {
+			"billing": {
+				"street": "Main St",
+				"houseNumber": "3",
+				"zip": "85131",
+				"city": "Munich",
+				"country": "DE"
+			}
+		}
+	},
+	"payment": {
+		"amount": 0.00,
+		"currency": "EUR",
+		"reference": "Test"
+	},
+	"products": [
+		{
+			"code": "ID-ABC123",
+			"name": "DESCR-ABC123",
+			"amount": 0.00
+		}
+	],
+	"preselection": {
+		"deferral": "ANY"
+	},
+	"clientInfo": {
+		"acceptHeader": "text/html",
+		"userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36",
+		"ip": "10.104.91.64, 93.104.91.64"
+	},
+	"style": {
+		"client": "RESPONSIVE",
+		"language": "en_GB",
+		"hostedVersion": "v3"
+	},
+	"callback": {
+		"returnUrl": "http://localhost:3000/html/success.html",
+		"cancelUrl": "http://localhost:3000/html/cancel.html",
+		"summaryUrl": "http://localhost:3000/html/new_summary.html",
+		"notificationUrl": "https://dev.oscato.com/fuqz546"
+	}
+}

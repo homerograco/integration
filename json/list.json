@@ -3,15 +3,15 @@
 	"country": "DE",
 	"integration": "SELECTIVE_NATIVE",
 	"division": "Default",
-	"presetFirst": false,
+	"presetFirst": true,
 	"updateOnly": false,
 	"channel": "WEB_ORDER",
 	"customer": {
 		"number": "1165821",
 		"email": "john.doe@optile.net",
 		"registration": {
-			"id": null,
-			"password": null
+			"id": "5c0533e6b55f2801861fc6c6u",
+			"password": "4klclMmi5grpdryv"
 		},
 		"name": {
 			"firstName": "John",
@@ -61,7 +61,7 @@
 	"callback": {
 		"returnUrl": "http://localhost:3000/html/success.html",
 		"cancelUrl": "http://localhost:3000/html/cancel.html",
-		"summaryUrl": "http://localhost:3000/html/new_summary.html",
+		"summaryUrl": "http://localhost:3000/html/summary.html",
 		"notificationUrl": "https://dev.oscato.com/fuqz546"
 	}
 }

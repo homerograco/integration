@@ -424,11 +424,13 @@ var inputData = {
 
 var randomId = (min, max) => "id" + Math.floor(Math.random() * (max - min)) + min
 
+
 function generateTransactionID() {
   min = 0;
   max = 100000;
   //The maximum is exclusive and the minimum is inclusive
   inputData.transactionId = randomId(min, max);
+  //inputData.transactionId = "id123456";
   sessionStorage.setItem("transactionId", inputData.transactionId);
   console.log("Transaction ID: ", inputData.transactionId);
 }
@@ -516,7 +518,7 @@ function modifyList(list) {
     var newList = list;
     newList.transactionId = inputData.transactionId;
     newList.payment.amount = inputData.cartAmount;
-    newList.products[0].amount = inputData.cartAmount;
+    //newList.products[0].amount = inputData.cartAmount;
     console.log("LIST Request: ", newList);
     loadJSONInspector("#JSONInspector", JSON.stringify(newList));
     return newList;
@@ -691,14 +693,14 @@ function loadSelectiveNative(data) {
     listUrl: responseData.links.self,
     smartSwitch: true,
     liveValidation: true,
-    cardView: true
+    cardView: false,
 
     /*
         abortFunction: function(responseData) {
           console.log("Abort: ", responseData)
         },
         */
-    /*
+/*
     proceedFunction: function(responseData) {
       if(responseData.interaction.code == "RETRY") {
         console.log("Retry? ", responseData);

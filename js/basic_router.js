@@ -7,9 +7,9 @@ var app = express();
 //uses express static to serve pages in public directory
 app.use('/', express.static('../'));
 //for test builds
-app.use('/op-payment-widget', express.static('../../../ajax-library/op-payment-widget-v3-3.1.27'));
+app.use('/op-payment-widget', express.static('../../../ajax-library/op-payment-widget-v3-3.1.30'));
 //for production builds
-//app.use('/op-payment-widget', express.static('../../../ajax-library/op-payment-widget-v3-3.1.22/package/src'));
+//app.use('/op-payment-widget', express.static('../../../ajax-library/op-payment-widget-v3-3.1.22/package/build'));
 //for dev builds
 //app.use('/op-payment-widget', express.static('../../../ajax-library/dev/op-payment-widget-v3/build'));
 

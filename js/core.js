@@ -1,16 +1,34 @@
 var escapeHtml = require("escape-html");
 var zalgoPromise = require('zalgo-promise');
-//var opPaymentWidget = require('./src/js/op-payment-widget-v3.js');
+
 var responseData = "";
 var inputData = {
   transactionId: "",
-  cartAmount: 0,
+  cartAmount: null,
   integrationScenario: "PURE_NATIVE"
 };
 
+var editor;
+
 //Helper functions
 
+//Not used atm. Will be part of the "Insomnia killer app".
+function startEditor(editor) {
+  editor = CodeMirror.fromTextArea(document.getElementById("list_request"),
+		{
+			theme: "ayu-dark",
+			mode: "application/ld+json",
+			lineNumbers: true,
+			matchBrackets: true,
+			lineWrapping: true
+		}
+	);
+  return editor;
+}
+
 var randomId = (min, max) => "id" + Math.floor(Math.random() * (max - min)) + min
+//for IE
+//var randomId = "ie15t5h3155";
 
 
 function generateTransactionID() {
@@ -18,20 +36,14 @@ function generateTransactionID() {
   max = 100000;
   //The maximum is exclusive and the minimum is inclusive
   inputData.transactionId = randomId(min, max);
+  //for IE
   //inputData.transactionId = "id123456";
   sessionStorage.setItem("transactionId", inputData.transactionId);
-  console.log("Transaction ID: ", inputData.transactionId);
+  console.log("Transaction ID:", inputData.transactionId);
 }
 
 /*
-function readCartAmount() {
-  //Reads shopping cart value
-  inputData.cartAmount = $("#cartAmount").val();
-  console.log("Cart amount: ", inputData.cartAmount);
-}
-*/
-
-function readCartAmount(cartInputId, keyId, callback) {
+function readCartAmount(cartInputId, keyId) {
   //reads cart amount from cartInputId via keyboard input indicated by keyId.
   //keyId = 13 for "Enter" key.
 
@@ -43,49 +55,26 @@ function readCartAmount(cartInputId, keyId, callback) {
       //Reads shopping cart value
       inputData.cartAmount = $(cartInputId).val();
       sessionStorage.setItem("cartAmount", inputData.cartAmount);
-      console.log("Cart amount: ", inputData.cartAmount);
+      console.log("Cart amount:", inputData.cartAmount);
     }
   });
 }
+*/
 
-function loadIFrameHosted(data) {
-  var responseData = data;
-  var deferred = $.Deferred();
-  var iframe = $("<iframe class='hiddenFrame'></iframe>").attr({
-    "id": "payment-widget",
-    "src": responseData.redirect.url,
-    "width": "100%",
-    "height": "341px"
+function readCartAmount(cartInputId, keyId) {
+  //reads cart amount from cartInputId via keyboard input indicated by keyId.
+  //keyId = 13 for "Enter" key.
+  $(cartInputId).keypress(function(keyboardInput) {
+    let key = keyboardInput.which;
+    inputData.cartAmount = $(cartInputId).val();
+    if (key == keyId) {
+      //Reads shopping cart value
+      inputData.cartAmount = $(cartInputId).val();
+      sessionStorage.setItem("cartAmount", inputData.cartAmount);
+      console.log("Cart amount:", inputData.cartAmount);
+      triggerList();
+    }
   });
-  iframe.load(deferred.resolve);
-  console.log("first");
-  deferred.done(function() {
-    console.log("second");
-  });
-  //iframe = document.createElement("iframe");
-  //iframe.id = "payment-widget";
-  //iframe.width = "100%";
-  //iframe.height = $(window).height() + "px";
-  //iframe.height = iframe.contentWindow.document.body.offsetHeight;
-  //iframe.src = responseData.redirect.url;
-  console.log(responseData);
-  console.log(responseData.redirect.url);
-  $("#paymentNetworks").append(iframe);
-  $("#submitBtn").hide();
-  $("#cartAmount").attr("disabled", true);
-  $("#listBtn").attr("disabled", true);
-
-  return deferred.promise();
-}
-
-function readIntegrationScenario() {
-  /*Not used for now, the idea is to make a selectable integration scenario from
-  the top menu */
-}
-
-function loadJSONInspector(JSONInspectorId, json) {
-  $(JSONInspectorId).html("<pre><code class='json'>" + json + "</code></pre>");
-  console.log(json);
 }
 
 function loadList() {
@@ -106,9 +95,10 @@ function modifyList(list) {
     var newList = list;
     newList.transactionId = inputData.transactionId;
     newList.payment.amount = inputData.cartAmount;
-    //newList.products[0].amount = inputData.cartAmount;
+    if(inputData.cartAmount != null) {
+      newList.products[0].amount = inputData.cartAmount;
+    }
     console.log("LIST Request: ", newList);
-    loadJSONInspector("#JSONInspector", JSON.stringify(newList));
     return newList;
   } else {
     return Error("Problem loading list");
@@ -117,7 +107,9 @@ function modifyList(list) {
 
 function listRequest(list) {
   /* Makes a list request to the server */
+
   var listJSON = JSON.stringify(list);
+  //var listJSON = editor.doc.getValue();
   var ajax = $.ajax({
     type: "POST",
     contentType: 'application/json; charset=utf-8',
@@ -130,6 +122,26 @@ function listRequest(list) {
     return data;
   });
   return ajax;
+}
+
+function triggerList() {
+//  $("#listBtn").click(function() {
+
+    loadList()
+      .then(function(loadedList) {
+        return modifyList(loadedList);
+      })
+      .then(function(list) {
+        return listRequest(list);
+      })
+      //listRequest(editor)
+      .then(function(listResponse) {
+        //loadPureNative(listResponse);
+        loadSelectiveNative(listResponse);
+        //manualSelectiveNative(listResponse);
+        //loadIFrameHosted(listResponse);
+      });
+  //});
 }
 
 function opTemplateEngine(template, placeholders, defaultValue, isEscapeHtml) {
@@ -225,32 +237,39 @@ function resultCallback(result) {
 
 function loadIFrameHosted(data) {
   var responseData = data;
+  var iFrameSettings = {
+    src: responseData.redirect.url,
+    id: "payment-widget",
+    width: "100%",
+    height: $(window).height() + "px"
+  };
+  /*
   var deferred = $.Deferred();
-  var iframe = $("<iframe class='hiddenFrame'></iframe>").attr({
+  var iFrame = $("<iframe class='hiddenFrame'></iframe>").attr({
     "id": "payment-widget",
     "src": responseData.redirect.url,
     "width": "100%",
     "height": "341px"
   });
-  iframe.load(deferred.resolve);
+  iFrame.load(deferred.resolve);
   console.log("first");
   deferred.done(function() {
     console.log("second");
   });
-  //iframe = document.createElement("iframe");
-  //iframe.id = "payment-widget";
-  //iframe.width = "100%";
-  //iframe.height = $(window).height() + "px";
-  //iframe.height = iframe.contentWindow.document.body.offsetHeight;
-  //iframe.src = responseData.redirect.url;
-  console.log(responseData);
-  console.log(responseData.redirect.url);
-  $("#paymentNetworks").append(iframe);
+  */
+
+  iFrame = document.createElement("iframe");
+  iFrame.setAttribute("src", iFrameSettings.src);
+  iFrame.setAttribute("id", iFrameSettings.id);
+  iFrame.setAttribute("width", iFrameSettings.width);
+  iFrame.setAttribute("height", iFrameSettings.height);
+
+  $("#paymentNetworks").append(iFrame);
   $("#submitBtn").hide();
   $("#cartAmount").attr("disabled", true);
   $("#listBtn").attr("disabled", true);
 
-  return deferred.promise();
+  //return deferred.promise();
 }
 
 function manualSelectiveNative(data) {
@@ -274,41 +293,48 @@ function manualSelectiveNative(data) {
 
 function loadSelectiveNative(data) {
   let responseData = data;
-  $("#paymentNetworks").checkoutList({
-    payButton: "submitBtn",
-    payButtonContainer: "submitBtnContainer",
-    baseUrl: "https://api.sandbox.oscato.com/pci/v1/",
-    listUrl: responseData.links.self,
-    smartSwitch: true,
-    liveValidation: true,
-    cardView: false,
+  if ($("#paymentNetworksContainer").attr("class") == "show") {
+    $("#paymentNetworks").empty();
+    //how do I clean it before loading?
+  } else {
+    $("#paymentNetworks").checkoutList({
+      payButton: "submitBtn",
+      payButtonContainer: "submitBtnContainer",
+      baseUrl: "https://api.sandbox.oscato.com/pci/v1/",
+      listUrl: responseData.links.self,
+      smartSwitch: true,
+      liveValidation: true,
+      cardView: false,
 
-    /*
-        abortFunction: function(responseData) {
-          console.log("Abort: ", responseData)
-        },
-        */
-/*
-    proceedFunction: function(responseData) {
-      if(responseData.interaction.code == "RETRY") {
-        console.log("Retry? ", responseData);
-      } else {
-        console.log("Some other case", responseData);
+
+          //abortFunction: function(responseData) {
+            //console.log("Abort: ", responseData)
+          //},
+
+
+          //proceedFunction: function(responseData) {
+            //if(responseData.interaction.code == "RETRY") {
+              //console.log("Retry? ", responseData);
+            //} else {
+              //console.log("Some other case", responseData);
+            //}
+          //}
+
+      //Uncomment this part for single-page app
+
+  /*
+      proceedFunction: function(proceedResponse) {
+        $("#paymentNetworks").empty();
+        loadSummaryPage(responseData, proceedResponse);
+        //loadSummaryPage(responseData, proceedResponse);
       }
-    }
-*/
-    /* //Uncomment this part for single-page app
-          proceedFunction: function(proceedResponse) {
-            $("#paymentNetworks").empty();
-            //loadSummaryPage(responseData, proceedResponse);
-            loadSummaryPage(responseData, proceedResponse);
-          }
-          */
+  */
 
-  }, false);
-  $("#submitBtn").show();
-  //$("#cartAmount").attr("disabled", true);
-  //$("#listBtn").attr("disabled", true);
+    }, false);
+    $("#paymentNetworksContainer").attr("class", "show");
+    //$("#cartAmount").attr("disabled", true);
+    //$("#listBtn").attr("disabled", true);
+  }
 }
 
 function loadPureNative(data) {
@@ -524,23 +550,12 @@ function loadSummaryPageGoogle(inputData, proceedData) {
 
 $(document).ready(function() {
   generateTransactionID();
+  //editor = startEditor(editor);
+  //console.log(editor);
   readCartAmount("#cartAmount", 13);
 
-  $("#listBtn").click(function() {
-    loadList()
-      .then(function(loadedList) {
-        return modifyList(loadedList);
-      })
-      .then(function(list) {
-        return listRequest(list);
-      })
-      .then(function(listResponse) {
-        //loadPureNative(listResponse);
-        loadSelectiveNative(listResponse);
-        //manualSelectiveNative(listResponse);
-        //loadIFrameHosted(listResponse);
-      });
-  });
+  //triggerList();
+
   /* $("#submitBtn").click(function() {
     // Get iFrame for the currently selected radio button. Only works for non-grouped forms:
     console.log("Submit");

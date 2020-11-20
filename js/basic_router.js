@@ -6,8 +6,9 @@ var app = express();
 
 //uses express static to serve pages in public directory
 app.use('/', express.static('../'));
+app.use('/codemirror', express.static('../../../codemirror/codemirror-5.52.0'));
 //for test builds
-app.use('/op-payment-widget', express.static('../../../ajax-library/op-payment-widget-v3-3.1.30'));
+app.use('/op-payment-widget', express.static('../../../ajax-library/in-use'));
 //for production builds
 //app.use('/op-payment-widget', express.static('../../../ajax-library/op-payment-widget-v3-3.1.22/package/build'));
 //for dev builds
@@ -25,7 +26,6 @@ app.post('/loadlist', function(request, response) {
 });
 
 app.post('/listrequest', function(request, response) {
-  //console.log(request.body);
   list.listRequest(request.body).then(function(result) {
     response.send(result);
   });
@@ -51,5 +51,5 @@ app.post('/loadListLongId', function(request, response) {
 
 //listens to var 'port' in localhost
 app.listen(port, function() {
-  console.log('Server Running');
+  console.log('Fingers crossed');
 });

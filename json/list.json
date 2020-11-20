@@ -2,13 +2,14 @@
 	"transactionId": "op_test",
 	"country": "DE",
 	"integration": "SELECTIVE_NATIVE",
-	"division": "Default",
-	"presetFirst": true,
-	"updateOnly": false,
 	"channel": "WEB_ORDER",
+	"division": "SECOND_DIV",
+	"allowDelete": false,
+	"presetFirst": false,
+	"updateOnly": false,
 	"customer": {
 		"number": "1165821",
-		"email": "john.doe@optile.net",
+		"email": "homero.graco-uk1@gmail.com",
 		"registration": {
 			"id": "5c0533e6b55f2801861fc6c6u",
 			"password": "4klclMmi5grpdryv"
@@ -34,7 +35,7 @@
 		}
 	},
 	"payment": {
-		"amount": 0.00,
+		"amount": 12.00,
 		"currency": "EUR",
 		"reference": "Test"
 	},
@@ -42,21 +43,23 @@
 		{
 			"code": "ID-ABC123",
 			"name": "DESCR-ABC123",
-			"amount": 0.00
+			"amount": 12.00,
+			"quantity": 1
 		}
 	],
 	"preselection": {
-		"deferral": "ANY"
+		"deferral": "ANY",
+		"networks": "ANY"
 	},
 	"clientInfo": {
-		"acceptHeader": "text/html",
+		"acceptHeader": "[\"text\\\/html\",\"application\\\/xhtml+xml\",\"image\\\/webp\",\"image\\\/apng\",\"application\\\/xml\",\"application\\\/signed-exchange\",\"*\\\/*\"]",
 		"userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36",
 		"ip": "10.104.91.64, 93.104.91.64"
 	},
 	"style": {
-		"client": "RESPONSIVE",
+		"hostedVersion": "v3",
 		"language": "en_GB",
-		"hostedVersion": "v3"
+		"cssOverride": "http://localhost:3000/css/payment-page.css"
 	},
 	"callback": {
 		"returnUrl": "http://localhost:3000/html/success.html",

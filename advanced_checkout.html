@@ -5,12 +5,19 @@
 	<title>Payment Page</title>
 	<meta charset="utf-8">
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 	<script src="./op-payment-widget/op-payment-widget-v3.js"></script>
 	<script src="./js/main.js"></script>
+	<script>
+	//highlightz
+	$(document).ready(function() {
+		$('textarea').highlightWithinTextarea({
+			highlight: "computer"
+		});
+	});
+	</script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-	<link rel="stylesheet" type="text/css" href="./op-payment-widget/op-payment-widget-v3.css">
+	<link rel="stylesheet" type="text/css" href="./op-payment-widget/op-payment-widget-v3-3.1.30.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="./css/styles.css">
 </head>
@@ -27,15 +34,10 @@
 
 		<div class="row">
 
-			<div class="col-md-2"></div>
-
-			<div class="col-md-8">
+			<div class="col-md-12">
 
 				<div class="input-group mb-3">
-					<div class="input-group-prepend">
-						<span class="input-group-text" id="currency-symbol">$</span>
-					</div>
-					<input id="cartAmount" type="text" class="form-control" placeholder="Insert your value here">
+					<input id="cartAmount" type="text" class="form-control" placeholder="Base URL">
 					<div class="input-group-append">
 						<span class="input-group-btn">
 									<button id="listBtn" class="btn btn-success" type="button" data-toggle="collapse" data-target="#paymentNetworksContainer" aria-expanded="false" aria-controls="collapseExample">Go!</button>
@@ -59,8 +61,16 @@
 
 			</div>
 
-			<div class="col-md-2"></div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
 
+				<div class="input-group">
+					<textarea id="list_request" rows="15" class="form-control" aria-label="list_request">
+					</textarea>
+				</div>
+
+			</div>
 		</div>
 
 	</div>

@@ -1,24 +1,16 @@
-//List request / response handler
-//Sandbox: Basic REVNT19IT01FUk86ZnEzcmpmZmdwYjNjcXZhYW5qODdsbmZ1cGRsYjVhbmtxNGlqOHV0a3Bw
-// Sandbox Simon Spielplatz: Basic U0lNT05QTEFZR1JPVU5EOmdwdGR0MHN1bWhsNjVwZDBmYmJwc2NlZ2d2MmFoZWVoNnA5bDc3MG8=
-//Nightly: Basic REVNT19IT01FUk86bGtjMzFoNXJuZ3Zrc2g4cmdrOHB1dnNpNmx1bmdscDNxZXE2ajQ2MQ==
-//Integration - Joseph: Basic TEFMQTprMTdxMG5rbDloZTlpZ29kMzdlMzRxOGttbWhhNG9wdWgydm0zNWl0
-//Integration demoHomero: Basic REVNT19IT01FUk86M21hbzQ0c2dxYjhsNDRybmRqZmR0YjV0MGpqbGtoMDFiMWo5b2F2NQ==
-//Live demoHomero: Basic REVNT19IT01FUk86dTh2MG1hN2cxdDhmcDgydTdjZGYyNjdndWlxamNtbWltN283N2FvMw==
-//KF: Basic S0lOR0ZJU0hFUjo5b2M5YmQ0NGtlZXQ3Z2YzdDlxNDZjNmZhcTAyczgybGtoY3Zua2to
-// CAFR: Basic Q0FGUjoxMWlvcDdiNGlucTA4cHNjcGUzNHU3bnZhOXZscWtrdGVrbXM0anBm
 const fs = require('fs');
 const http = require('http');
 const request = require('request-promise');
 const jsonList = require('../json/list.json');
+const credentials = require('../json/credentials.json');
 const optileHeaders = {
   "Accept": "application/vnd.optile.payment.enterprise-v1-extensible+json",
   "Content-Type": "application/vnd.optile.payment.enterprise-v1-extensible+json",
-  "Authorization": "Basic REVNT19IT01FUk86ZnEzcmpmZmdwYjNjcXZhYW5qODdsbmZ1cGRsYjVhbmtxNGlqOHV0a3Bw"
+  "Authorization": ""
 };
 const nightlyUrl = "https://api.live.nightly.oscato.net/api/lists/";
 const integrationUrl = "https://api.integration.oscato.com/api/lists/";
-const sandboxUrl = "https://api.sandbox.oscato.com/api/lists/";
+const sandboxUrl = "https://api.sandbox.oscato.com/api/lists?view=routes";
 const liveUrl = "https://api.live.oscato.com/api/lists/";
 var baseUrl = sandboxUrl; //change baseUrl here when testing
 var requestedList = {};
@@ -39,6 +31,8 @@ module.exports = {
   //performs a LIST request
   listRequest: function(input) {
     requestedList = input;
+    optileHeaders.Authorization = 'Basic ' + Buffer.from(credentials.basic.merchant_code + ":" + credentials.basic.token).toString('base64');
+    //tried btoa() but it would not work with node.js.
     return request({
         url: baseUrl,
         method: "POST",

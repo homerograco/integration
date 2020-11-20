@@ -5,37 +5,33 @@
 	<title>Payment Page</title>
 	<meta charset="utf-8">
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	<script src="./codemirror/lib/codemirror.js"></script>
+	<script src="./codemirror/addon/edit/matchbrackets.js"></script>
+	<script src="./codemirror/addon/comment/continuecomment.js"></script>
+	<script src="./codemirror/addon/comment/comment.js"></script>
+	<script src="./codemirror/mode/javascript/javascript.js"></script>
 	<script src="./op-payment-widget/op-payment-widget-v3.js"></script>
 	<script src="./js/main.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 	<link rel="stylesheet" type="text/css" href="./op-payment-widget/op-payment-widget-v3.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="./css/styles.css">
+	<link rel="stylesheet" href="./codemirror/lib/codemirror.css">
+	<link rel="stylesheet" href="./codemirror/theme/ayu-dark.css">
+	<link rel="stylesheet" type="text/css" href="./css/styles-dark.css">
 </head>
 
 <body>
 
 	<div class="container-fluid">
 
-		<nav aria-label="breadcrumb">
-			<ol class="breadcrumb">
-				<li class="breadcrumb-item" aria-current="page"><a href="#">Checkout</a></li>
-			</ol>
-		</nav>
-
 		<div class="row">
-
-			<div class="col-md-2"></div>
-
-			<div class="col-md-8">
-
+			<div class="col-md-6">
 				<div class="input-group mb-3">
 					<div class="input-group-prepend">
-						<span class="input-group-text" id="currency-symbol">$</span>
+						<span class="input-group-text" id="currency-symbol">POST</span>
 					</div>
-					<input id="cartAmount" type="text" class="form-control" placeholder="Insert your value here">
+					<input id="cartAmount" type="text" class="form-control" placeholder="LIST URL">
 					<div class="input-group-append">
 						<span class="input-group-btn">
 									<button id="listBtn" class="btn btn-success" type="button" data-toggle="collapse" data-target="#paymentNetworksContainer" aria-expanded="false" aria-controls="collapseExample">Go!</button>
@@ -43,8 +39,27 @@
 					</div>
 				</div>
 
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="merchant-code">Merchant Code</span>
+					</div>
+					<input id="cartAmount" type="text" class="form-control">
+				</div>
+
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="api-token">API Token</span>
+					</div>
+					<input id="cartAmount" type="text" class="form-control">
+				</div>
+
+				<form>
+    				<textarea id="list_request"></textarea>
+				</form>
+			</div>
+			<div class="col-md-6">
 				<div id="paymentNetworksContainer" class="collapse">
-					<div class="card card-body">
+					<div class="card card-body" style="background-color: #0a0e14;">
 						<div id="paymentNetworks" src="" width="100%" height="500">
 						</div>
 
@@ -55,12 +70,7 @@
 
 					</div>
 				</div>
-
-
 			</div>
-
-			<div class="col-md-2"></div>
-
 		</div>
 
 	</div>

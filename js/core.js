@@ -1,5 +1,4 @@
 var escapeHtml = require("escape-html");
-var zalgoPromise = require('zalgo-promise');
 
 var responseData = "";
 var inputData = {
@@ -94,8 +93,8 @@ function modifyList(list) {
   if (list) {
     var newList = list;
     newList.transactionId = inputData.transactionId;
-    newList.payment.amount = inputData.cartAmount;
-    if(inputData.cartAmount != null) {
+    if(inputData.cartAmount != null && inputData.cartAmount !== "") {
+      newList.payment.amount = inputData.cartAmount;
       newList.products[0].amount = inputData.cartAmount;
     }
     console.log("LIST Request: ", newList);

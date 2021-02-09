@@ -8,11 +8,16 @@ const optileHeaders = {
   "Content-Type": "application/vnd.optile.payment.enterprise-v1-extensible+json",
   "Authorization": ""
 };
-const nightlyUrl = "https://api.live.nightly.oscato.net/api/lists/";
-const integrationUrl = "https://api.integration.oscato.com/api/lists/";
-const sandboxUrl = "https://api.sandbox.oscato.com/api/lists?view=routes";
-const liveUrl = "https://api.live.oscato.com/api/lists/";
-var baseUrl = sandboxUrl; //change baseUrl here when testing
+
+/*
+nightly Url = "https://api.live.nightly.oscato.net/api/lists/";
+integration Url = "https://api.integration.oscato.com/api/lists/";
+sandbox Url = "https://api.sandbox.oscato.com/api/lists/";
+live Url = "https://api.live.oscato.com/api/lists/";
+*/
+
+var environment = credentials.environment;
+var baseUrl = "https://api." + environment + ".oscato.com/api/lists/"
 var requestedList = {};
 var responseListLongId = "";
 

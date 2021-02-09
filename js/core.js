@@ -200,7 +200,8 @@ function summaryPageHandlerOnResult(data) {
     case "PROCEED":
       $("#paymentNetworks").empty();
       $("#submitBtnContainer").hide();
-      showGlobalSuccessMessage("Payment is done!")
+      //showGlobalSuccessMessage("Payment is done!")
+      window.open(data.redirect.url, '_blank');
       break;
 
     case "ABORT":
@@ -310,26 +311,21 @@ function loadSelectiveNative(data) {
             //console.log("Abort: ", responseData)
           //},
 
-
+          //immediate Charge
           //proceedFunction: function(responseData) {
-            //if(responseData.interaction.code == "RETRY") {
-              //console.log("Retry? ", responseData);
-            //} else {
-              //console.log("Some other case", responseData);
+            //if(responseData.redirect.method = "GET") {
+              //window.open(responseData.redirect.url, '_blank');
             //}
           //}
 
       //Uncomment this part for single-page app
-
-  /*
       proceedFunction: function(proceedResponse) {
         $("#paymentNetworks").empty();
         loadSummaryPage(responseData, proceedResponse);
-        //loadSummaryPage(responseData, proceedResponse);
       }
-  */
 
-    }, false);
+
+    });
     $("#paymentNetworksContainer").attr("class", "show");
     //$("#cartAmount").attr("disabled", true);
     //$("#listBtn").attr("disabled", true);
